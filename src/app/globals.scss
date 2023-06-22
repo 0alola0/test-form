@@ -1,0 +1,213 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+
+section {
+  width: 100%;
+  padding-inline: 50px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 50px;
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+    padding-inline: 20px;
+  }
+
+  .questionary {
+    form {
+      .form_container {
+        position: relative;
+        background-color: #f2f4f7;
+        border-radius: 6px;
+        margin-top: 20px;
+        padding: 30px;
+        box-sizing: border-box;
+        div {
+          .form_item {
+            display: grid;
+            background-color: #fff;
+            border: 1px solid #d0d5dd;
+            border-radius: 6px;
+            grid-template-columns: 10fr 1fr;
+            padding-inline: 18px;
+            margin-top: 10px;
+            input {
+              padding-block: 11px;
+              border: none;
+              color: #344054;
+              font-family: "Helvetica";
+              font-style: normal;
+              font-weight: 400;
+              font-size: 14px;
+              line-height: 1.4;
+              &.red {
+                &::placeholder {
+                  color: #d92d20;
+                }
+              }
+              &::placeholder {
+                color: #98a2b3;
+                transition: all 0.5s;
+              }
+              &:focus {
+                outline: none;
+              }
+            }
+            .item_actions {
+              position: relative;
+              display: flex;
+              justify-content: flex-end;
+              gap: 10px;
+              button {
+                padding: 0;
+                background: none;
+                border: none;
+                img {
+                  vertical-align: middle;
+                }
+              }
+            }
+          }
+          .add_activity {
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 5px 12px;
+            border: none;
+            margin-top: 16px;
+            gap: 4px;
+            border-radius: 4px;
+            background-color: #667085;
+            font-size: 10px;
+            font-family: Helvetica;
+            line-height: 1.4;
+            color: #fff;
+            img {
+              vertical-align: middle;
+              width: 14px;
+              height: 14px;
+            }
+          }
+        }
+        .actions {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%) translateY(50%);
+          display: flex;
+          gap: 10px;
+          button {
+            position: relative;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: none;
+            padding: 0;
+            img {
+              vertical-align: middle;
+            }
+            &.minus {
+              background-color: #d92d20;
+            }
+            &.plus {
+              background-color: #12b76a;
+            }
+          }
+        }
+      }
+      .submit {
+        width: 100%;
+        border: none;
+        margin-top: 40px;
+        background: #026aac;
+        color: white;
+        border-radius: 6px;
+        padding-block: 15px;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 1.2;
+      }
+    }
+  }
+
+  .placeholder {
+    background-color: aliceblue;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.delete_prompt {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100%);
+  div {
+    display: flex;
+    background: #344054;
+    border-radius: 4px;
+    padding: 5px 12px;
+    justify-content: center;
+    gap: 10px;
+    a {
+      font-weight: 400;
+      font-size: 10px;
+      line-height: 1.4;
+      &:nth-child(1) {
+        color: #ffffff;
+      }
+      &:nth-child(2) {
+        color: #98a2b3;
+        position: relative;
+      }
+    }
+  }
+  .triangle {
+    display: block;
+    padding: 0;
+    width: 12px;
+    height: 12px;
+    background: #344054;
+    margin: 0 auto;
+    margin-top: -2px;
+    clip-path: polygon(50% 50%, 0 0, 100% 0);
+    // margin-top: -2px;
+  }
+}
+.empty_prompt {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100%);
+  &.activity{
+    transform: translateX(-50%)  translateY(-70%);
+  }
+  div {
+    display: flex;
+    background: #536179;
+    border-radius: 4px;
+    padding: 5px 12px;
+    p {
+      font-weight: 400;
+      font-size: 10px;
+      line-height: 1.4;
+      color: #ffffff;
+      margin: 0;
+    }
+  }
+  .triangle {
+    display: block;
+    padding: 0;
+    width: 12px;
+    height: 12px;
+    background: #536179;
+    margin: 0 auto;
+    margin-top: -2px;
+    clip-path: polygon(50% 50%, 0 0, 100% 0);
+  }
+}
+
+button,
+a {
+  cursor: pointer;
+}
