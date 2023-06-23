@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import FormContainer from "./FormContainer";
 
 const FormMain = () => {
+  //ობიექტში სახელები დროებითია, required-ს ვიყენებ ვალიდაციისას ცარიელი ინფოდების გასაწითლებლად/დასაჭერად. მომავალში უკეთესი ფროფერთიების დამატება შეიძლება:დ
   const [forms, setForms] = useState([
     {
       header: {
@@ -13,9 +14,13 @@ const FormMain = () => {
       items: [],
     },
   ]);
-  const [showEmptyPrompt, setShowEmptyPrompt] = useState(false);
+
+  const [showEmptyFormPrompt, setShowEmptyFormPrompt] = useState(false);
   const [showEmptyInputPrompt, setShowEmptyInputPrompt] = useState(false);
 
+  //არც ერთი ცარიელი აქტივობა არ უნდა იყოს.
+  //არც ერთ პლიუსს არ ეჭირება თუ რომელიმე აქტივობა მაინც არის ცარიელი.
+  //თუ აქტივობა არ არის საერთოდ დამატებული მაშინ შეიძლება ორივე პლიუსზე დაჭერა
   const handleFormAddition = (formIndex) => {
     const isAnyFormEmpty = (formIndex) => {
       const isHeaderEmpty = forms[formIndex].header.task === "";
@@ -36,34 +41,8 @@ const FormMain = () => {
       };
       setForms([...forms, newForm]);
     } else {
-      setShowEmptyPrompt(true);
-      const updatedForms = [...forms];
-      if (updatedForms[formIndex].header.task === "") {
-        updatedForms[formIndex].header.required = true;
-      }
-      updatedForms[formIndex].items.forEach((item) => {
-        if (item.task === "") {
-          item.required = true;
-        }
-      });
-      setForms(updatedForms);
-      setTimeout(() => {
-        const resetForms = [...forms];
-        resetForms[formIndex].header.required = false;
-        resetForms[formIndex].items.forEach((item) => {
-          item.required = false;
-        });
-        setForms(resetForms);
-        setShowEmptyPrompt(false);
-      }, 3000);
+      throwRequiredEmpty(setShowEmptyFormPrompt, formIndex);
     }
-  };
-
-  const handleFormDeletion = (formIndex) => {
-    const updatedForms = [...forms];
-    updatedForms.splice(formIndex, 1);
-    setForms(updatedForms);
-    console.log(showEmptyPrompt);
   };
 
   const handleInputAddition = (formIndex) => {
@@ -81,23 +60,39 @@ const FormMain = () => {
       });
       setForms(updatedForms);
     } else {
-      setShowEmptyInputPrompt(true);
-      const updatedForms = [...forms];
-      updatedForms[formIndex].items.forEach((item) => {
-        if (item.task === "") {
-          item.required = true;
-        }
-      });
-      setForms(updatedForms);
-      setTimeout(() => {
-        const resetForms = [...forms];
-        resetForms[formIndex].items.forEach((item) => {
-          item.required = false;
-        });
-        setForms(resetForms);
-        setShowEmptyInputPrompt(false);
-      }, 3000);
+      throwRequiredEmpty(setShowEmptyInputPrompt, formIndex);
     }
+  };
+
+  //აჩენს პრომფტს და აწითლებს დასამატებლად საჭირო ინფუთს/ჰედერს. 3 წამის მერე ქრება
+  const throwRequiredEmpty = (state, formIndex) => {
+    state(true);
+    const updatedForms = [...forms];
+    if (updatedForms[formIndex].header.task === "") {
+      updatedForms[formIndex].header.required = true;
+    }
+    updatedForms[formIndex].items.forEach((item) => {
+      if (item.task === "") {
+        item.required = true;
+      }
+    });
+    setForms(updatedForms);
+    setTimeout(() => {
+      const resetForms = [...forms];
+      resetForms[formIndex].header.required = false;
+      resetForms[formIndex].items.forEach((item) => {
+        item.required = false;
+      });
+      setForms(resetForms);
+      state(false);
+    }, 3000);
+  };
+
+  //წაშლის ფუნქციები
+  const handleFormDeletion = (formIndex) => {
+    const updatedForms = [...forms];
+    updatedForms.splice(formIndex, 1);
+    setForms(updatedForms);
   };
 
   const handleItemDeletion = (formIndex, itemIndex) => {
@@ -106,6 +101,7 @@ const FormMain = () => {
     setForms(updatedForms);
   };
 
+  //შეცვლის ფუნქცია (ჰედერიც და აითემიც)
   const handleItemChange = (formIndex, itemIndex, value, isHeader) => {
     const updatedForms = [...forms];
     if (isHeader) {
@@ -116,6 +112,7 @@ const FormMain = () => {
     setForms(updatedForms);
   };
 
+  //დროებითი საბმითი, უბრალოდ ცარიელებს იჭერს და აწითლებს
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedForms = forms.map((form) => {
@@ -152,7 +149,7 @@ const FormMain = () => {
           handleInputAddition={handleInputAddition}
           handleItemDeletion={handleItemDeletion}
           handleFormDeletion={handleFormDeletion}
-          showEmptyPrompt={showEmptyPrompt}
+          showEmptyFormPrompt={showEmptyFormPrompt}
           showEmptyInputPrompt={showEmptyInputPrompt}
           isLast={index + 1 == forms.length ? true : false}
           isFirst={forms.length === 1}
@@ -167,7 +164,3 @@ const FormMain = () => {
 };
 
 export default FormMain;
-
-//არც ერთი ცარიელი აქტივობა არ უნდა იყოს. არც ერთ პლიუსს არ ეჭირება
-//თუ რომელიმე აქტივობა მაინც არის ცარიელი. თუ აქტივობა არ არის საერთოდ დამატებული
-// მაშინ შეიძლება ორივე პლიუსზე დაჭერა

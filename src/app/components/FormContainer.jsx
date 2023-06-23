@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import FormItem from "./FormItem";
 import FormHeaderItem from "./FormHeaderItem";
 
@@ -13,7 +13,7 @@ const FormContainer = ({
   handleInputAddition,
   handleItemDeletion,
   handleFormDeletion,
-  showEmptyPrompt,
+  showEmptyFormPrompt,
   showEmptyInputPrompt,
 }) => {
   const [showDeletePrompt, setShowDeletePrompt] = useState(false);
@@ -25,7 +25,6 @@ const FormContainer = ({
       setShowEmpty(true);
     }, 3000);
   }
-  console.log(showDeletePrompt)
  
   return (
     <div className="form_container">
@@ -34,7 +33,6 @@ const FormContainer = ({
           header={singleForm.header}
           formIndex={formIndex}
           handleItemChange={handleItemChange}
-          showEmptyPrompt={showEmptyPrompt}
         />
         {singleForm?.items?.map((item, index) => (
           <FormItem
@@ -43,23 +41,11 @@ const FormContainer = ({
             formIndex={formIndex}
             itemIndex={index}
             handleItemChange={handleItemChange}
-            handleInputAddition={handleInputAddition}
             handleItemDeletion={handleItemDeletion}
-            isFirstInput={index === 0}
-            showEmptyPrompt={showEmptyPrompt}
-            showEmptyInputPrompt={showEmptyInputPrompt}
-            isLast={index + 1 == singleForm.items.length ? true : false}
           />
         ))}
-        <button
-          //style={singleForm.items.length > 1 ? { display: "none" } : {}}
-          type="button"
-         // disabled={singleForm.items.length > 1}
-          onClick={() => {
-            handleEmpty();
-          }}
-          className="add_activity"
-        >
+        <button type="button" onClick={handleEmpty} className="add_activity">
+          {/* პრომფტი სიცარიელის */}
           <div
             className="empty_prompt activity"
             style={showEmptyInputPrompt&&!showEmpty ? {} : { display: "none" }}
@@ -69,6 +55,7 @@ const FormContainer = ({
             </div>
             <div className="triangle"></div>
           </div>
+
           <img src="/plus-white.svg" alt="" />
           აქტივობის დამატება
         </button>
@@ -109,7 +96,7 @@ const FormContainer = ({
         >
           <div
             className="empty_prompt"
-            style={!showEmptyPrompt ? { display: "none" } : {}}
+            style={!showEmptyFormPrompt ? { display: "none" } : {}}
           >
             <div>
               <p>ველი ცარიელია</p>
