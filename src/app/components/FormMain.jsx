@@ -134,9 +134,7 @@ const FormMain = () => {
 
     setForms(updatedForms);
   };
-
-  console.log(forms);
-
+  
   return (
     <form onSubmit={handleSubmit}>
       {forms.map((form, index) => (
