@@ -37,7 +37,23 @@ const FormMain = () => {
       setForms([...forms, newForm]);
     } else {
       setShowEmptyPrompt(true);
+      const updatedForms = [...forms];
+      if (updatedForms[formIndex].header.task === "") {
+        updatedForms[formIndex].header.required = true;
+      }
+      updatedForms[formIndex].items.forEach((item) => {
+        if (item.task === "") {
+          item.required = true;
+        }
+      });
+      setForms(updatedForms);
       setTimeout(() => {
+        const resetForms = [...forms];
+        resetForms[formIndex].header.required = false;
+        resetForms[formIndex].items.forEach((item) => {
+          item.required = false;
+        });
+        setForms(resetForms);
         setShowEmptyPrompt(false);
       }, 3000);
     }
@@ -47,6 +63,7 @@ const FormMain = () => {
     const updatedForms = [...forms];
     updatedForms.splice(formIndex, 1);
     setForms(updatedForms);
+    console.log(showEmptyPrompt);
   };
 
   const handleInputAddition = (formIndex) => {
@@ -65,7 +82,19 @@ const FormMain = () => {
       setForms(updatedForms);
     } else {
       setShowEmptyInputPrompt(true);
+      const updatedForms = [...forms];
+      updatedForms[formIndex].items.forEach((item) => {
+        if (item.task === "") {
+          item.required = true;
+        }
+      });
+      setForms(updatedForms);
       setTimeout(() => {
+        const resetForms = [...forms];
+        resetForms[formIndex].items.forEach((item) => {
+          item.required = false;
+        });
+        setForms(resetForms);
         setShowEmptyInputPrompt(false);
       }, 3000);
     }
@@ -92,14 +121,14 @@ const FormMain = () => {
     const updatedForms = forms.map((form) => {
       if (form.header.task === "") {
         form.header.required = true;
-      }else{
+      } else {
         form.header.required = false;
       }
-  
+
       form.items.forEach((item) => {
         if (item.task === "") {
           item.required = true;
-        }else{
+        } else {
           item.required = false;
         }
       });
@@ -107,7 +136,6 @@ const FormMain = () => {
     });
 
     setForms(updatedForms);
-
   };
 
   console.log(forms);

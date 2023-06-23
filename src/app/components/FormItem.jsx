@@ -6,12 +6,7 @@ const FormItem = ({
   formIndex,
   itemIndex,
   handleItemChange,
-  isLast,
-  isFirstInput,
-  handleInputAddition,
   handleItemDeletion,
-  showEmptyInputPrompt,
-  showEmptyPrompt,
 }) => {
   const [showDeletePrompt, setShowDeletePrompt] = useState(false);
 
@@ -26,20 +21,18 @@ const FormItem = ({
         value={item.task}
         placeholder={item.placeholder}
         onChange={handleChange}
-        className={showEmptyPrompt||showEmptyInputPrompt||item.required?"red":""}
+        className={item.required ? "red" : ""}
       />
       <div className="item_actions">
-        <button
-          type="button"
-          onClick={() => setShowDeletePrompt(true)}
-          // style={isFirstInput ? { display: "none" } : {}}
-        >
-                    <div
+        <button type="button" onClick={() => setShowDeletePrompt(true)}>
+          <div
             style={!showDeletePrompt ? { display: "none" } : {}}
             className="delete_prompt"
           >
             <div>
-              <a onClick={() => handleItemDeletion(formIndex, itemIndex)}>წაშლა</a>
+              <a onClick={() => handleItemDeletion(formIndex, itemIndex)}>
+                წაშლა
+              </a>
               <a
                 onClick={(e) => {
                   e.stopPropagation();
@@ -52,14 +45,6 @@ const FormItem = ({
           </div>
           <img src="/minus-red.svg" alt="" />
         </button>
-        {/* <button
-          style={!isLast||isFirstInput ? { display: "none" } : {}}
-          type="button"
-          disabled={!isLast&&!isFirstInput}
-          onClick={() => handleInputAddition(formIndex)}
-        >
-          <img src="/plus-green.svg" alt="" />
-        </button> */}
       </div>
     </div>
   );

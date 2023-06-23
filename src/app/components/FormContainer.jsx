@@ -24,11 +24,9 @@ const FormContainer = ({
     setTimeout(() => {
       setShowEmpty(true);
     }, 3000);
-
   }
-  useEffect(() => {
-    setShowDeletePrompt(false);
-  }, [formIndex]);
+  console.log(showDeletePrompt)
+ 
   return (
     <div className="form_container">
       <div>
@@ -87,7 +85,9 @@ const FormContainer = ({
             className="delete_prompt"
           >
             <div>
-              <a onClick={() => handleFormDeletion(formIndex)}>წაშლა</a>
+              <a onClick={() => {
+                setShowDeletePrompt(false);
+                handleFormDeletion(formIndex)}}>წაშლა</a>
               <a
                 onClick={(e) => {
                   e.stopPropagation();

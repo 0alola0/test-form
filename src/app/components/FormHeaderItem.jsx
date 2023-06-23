@@ -1,12 +1,7 @@
 "use client";
 import React from "react";
 
-const FormHeaderItem = ({
-  header,
-  formIndex,
-  handleItemChange,
-  showEmptyPrompt,
-}) => {
+const FormHeaderItem = ({ header, formIndex, handleItemChange }) => {
   const handleChange = (event) => {
     const { value } = event.target;
     handleItemChange(formIndex, 0, value, true);
@@ -18,7 +13,7 @@ const FormHeaderItem = ({
         value={header.task}
         placeholder={header.placeholder}
         onChange={handleChange}
-        className={showEmptyPrompt||header.required ? "red" : ""}
+        className={header.required ? "red" : ""}
       />
     </div>
   );
